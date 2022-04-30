@@ -1,0 +1,27 @@
+.upload_area {
+  border-top-style: solid;
+  border-width: 2px;
+}
+
+.dcir_result {
+  text-align: left;
+  border-top-style: solid;
+  border-width: 2px;
+}
+
+.dcir_body {
+  text-align: center;
+}
+
+.dcir_img {
+  text-align: left;
+  display:block;
+}
+
+.pass {
+  color: green;
+}
+
+.fail {
+  color:red;
+}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>Project Index</h1>
+
+  {% if user.is_superuser %}
+  <a class="btn btn-default" href="{% url 'project:create' %}">
+    Create New Project
+  </a>
+  {% endif %}
+
+  <a class="btn btn-default" href="{% url 'home' %}">
+    Back
+  </a>
+
+<p></p>
+
+<table class="table table-hover">
+  <tr>
+    <th>Project Type</th>
+    <th>Project Name</th>
+    <th>Reference Number</th>
+    <th>Project Status</th>
+  </tr>
+
+  {% for project in project_list %}
+  <tr>
+    <td width='20%'>{{ project.get_bus_type_display}}</td>
+    <td width='40%'><a href="{{project.id}}">{{ project.project_name }}</a></td>
+    <td width='20%'>{{ project.reference_number }}</td>
+    <td width='20%'>{{ project.get_project_status_display }}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+<!-- 老的list形式显示project index，已弃用 -->
+    <!-- <ul class="projectindex">
+      {% for project in project_list %}
+        <li>
+          <a href="{{project.id}}">
+            {{ project.get_bus_type_display}} - {{ project.project_name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul> -->
+
+</div>
+{% endblock %}

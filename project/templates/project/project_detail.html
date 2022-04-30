@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- 删除附件的确认javascript程序 -->
+<script>
+function delete_confirm(){
+  if(confirm("Do you confirm to Delete this attachment?")){
+    return true;
+  }
+  return false;
+}
+</script>
+
+<link rel="stylesheet" href="{% static "project/css/project_detail.css" %}">
+
+<div class="container">
+  <h1>Project Detail</h1>
+  <p>
+  {% if user.is_superuser %}
+    <a class="btn btn-default" href="{% url 'project:update' pk=project_detail.pk %}">Edit Project</a>
+    <a class="btn btn-default" href="{% url 'project:upload' pk=project_detail.pk %}">Upload New Attachment</a>
+  {% endif %}
+    <a class="btn btn-default" href="{% url 'project:index' %}">Back</a>
+  </p>
+
+  <table class="table table-bordered">
+    <tr>
+      <td width='20%'>Reference Number</td>
+      <td>{{ project_detail.reference_number }}</td>
+    </tr>
+
+    <tr>
+      <td>Project Name</td>
+      <td>{{project_detail.get_bus_type_display}} - {{project_detail.project_name}}</td>
+    </tr>
+
+    <tr>
+      <td>Module Type</td>
+      <td>{{project_detail.get_module_type_display}}</td>
+    </tr>
+
+    <tr>
+      <td>Bus Quantity</td>
+      <td>{{project_detail.bus_number}}</td>
+    </tr>
+
+    <tr>
+      <td>Project Status</td>
+      <td>{{project_detail.get_project_status_display}}</td>
+    </tr>
+
+    <tr>
+      <td>Attachment List</td>
+      <td>
+        {% for document in project_detail.docu.all %}
+          {{ document.description }}
+          <a href="{{MEDIA_URL}}/{{ document.document }}" download> Download </a>
+          {% if user.is_superuser %}
+            <a onclick="return delete_confirm()" href="{% url 'project:doc_delete' pk=document.pk %}"> Delete </a>
+          {% endif %}
+          <p></p>
+        {% endfor %}
+      </td>
+    </tr>
+
+  </table>
+
+</div>
+
+
+{% endblock %}

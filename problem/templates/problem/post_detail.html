@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static "problem/css/post_detail.css" %}">
+<div class="container">
+
+<!-- Post Part -->
+  <h1 class="posttitle loader">{{ post.title }}</h1>
+  <p class="date postdate"> {{ post.create_date }} </p>
+
+  <div class="row">
+    <div class="col-md-9">
+      <h4 class="post_status">Status: {{post.get_status_display}}</h4>
+    </div>
+    <div class="col-md-3">
+      {% if user.is_superuser %}
+        <a class="btn btn-primary" href="{% url "problem:update" pk=post.pk %}">Change Topic</a>
+        <a class="btn btn-primary" href="{% url "problem:highlight" pk=post.pk %}">Highlight Topic</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Contents:
+    </div>
+    <div class="panel-body">
+      {{ post.description }}
+      <p></p>
+      <div class="row">
+      {% for image in post.post_f.all %}
+        <div class="col-md-6">
+          <img src="{{ image.postattach.url }}" alt="No Picture" class="img-thumbnail">
+          {{ image.description }}
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+
+    <div class="panel-footer">
+
+        <a class="btn btn-default" href="{% url "problem:postupload" pk=post.pk %}">Upload Picture</a>
+        <a class="btn btn-primary" href="{% url "problem:create_reply" pk=post.pk %}">Reply</a>
+
+      {% if user.is_superuser %}
+        <a class="btn btn-danger" href="{% url "problem:delete" pk=post.pk %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+<!-- Line Break -->
+  <p></p>
+<!-- Reply Part -->
+<div class="panel panel-default">
+  <div class="panel-heading">Comments:</div>
+  <div class="panel-body">
+    {% for reply in post.replys.all %}
+      <p style="text-align:right">Replied by {{ reply.author }} at {{ reply.reply_date }}</p>
+      <p>{{ reply.description|safe }}</p>
+      <br>
+      <!-- <p><b>Attachment List:</b></p> -->
+      {% for attachment in reply.reply_f.all %}
+        {{ attachment.description }}
+        <a href="{{MEDIA_URL}}/{{attachment.replyattach}}" download>Download</a>
+        <p></p>
+      {% endfor %}
+      <p></p>
+      <!-- {% if user.is_superuser %} -->
+        <a class="btn btn-default" href="{% url "problem:replyupload" pk=reply.pk %}">Upload Attachment</a>
+      <!-- {% endif %} -->
+  {% empty %}
+    <!-- <div class="panel-body"> -->
+      <p>Waiting for Your Comments...</p>
+    <!-- </div> -->
+  {% endfor %}
+  </div>
+</div>
+<a class="btn btn-default" role="button" href="{% url 'problem:all' %}">Back</a>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static "work_instruction/css/index.css" %}">
+<div class="container">
+
+
+<h1>DOCUMENT LIST</h1>
+
+<div class="row">
+	<div class="col-md-9">
+    {% if user.is_superuser %}
+		<a class="btn btn-primary" href="{% url 'work_instruction:create_wi' %}">Upload New Document</a>
+    {% endif %}
+		<a class="btn btn-default" href="{% url 'home' %}">Back</a>
+	</div>
+	<div class="col-md-3">
+
+
+		<form role="search" method="get" id="searchform" action="{% url 'work_instruction:search' %}">
+			<input type="search" name="q" placeholder="Search" required>
+			<button class="btn btn-default" type="submit">Search</button>
+		</form>
+	</div>
+</div>
+
+
+<p></p>
+
+<table class="table table-hover">
+  <tr>
+    <th>Type</th>
+    <th>Document No.</th>
+    <th>Name</th>
+    <th>Revision</th>
+    <th>Upload Date</th>
+    <th>Download</th>
+		<th>Update</th>
+  </tr>
+  {% for wi in widoc_list %}
+  <tr>
+    <td width='15%'>{{ wi.get_doc_type_display|safe }}</td>
+    <td width='10%'>{{ wi.doc_number }}</td>
+    <td><a href="{% url "work_instruction:detail" pk=wi.pk %}">{{ wi.doc_name }}</a></td>
+    <td width='5%'>{{ wi.doc_version }}</td>
+    <td width='10%'>{{ wi.doc_date|date:"M d, Y" }}</td>
+    <td width='10%'><a href="wi.doc_attachment"><span class="glyphicon glyphicon-save-file"></span></a></td>
+		<!-- <td width='10%'>{{wi.doc_attachment}}</td> -->
+		<td width='10%'>
+			{% if user.is_superuser %}
+			<a href="{% url 'work_instruction:update' pk=wi.pk %}">update</a>
+			{% endif %}
+		</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</div>
+{% endblock %}

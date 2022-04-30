@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>DOCUMENT REVISION HISTORY</h1>
+<div class="container">
+
+<div class="row">
+	<div class="col-md-9">
+    {% if user.is_superuser %}
+		<a class="btn btn-primary" href="{% url 'work_instruction:create_revise' pk=widoc.pk %}">Add New Version</a>
+    {% endif %}
+		<a class="btn btn-default" href="{% url 'work_instruction:index' %}">Back</a>
+	</div>
+</div>
+
+
+<p></p>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Revision</th>
+    <th>Modify Content</th>
+    <th>Revisor</th>
+    <th>Date</th>
+  </tr>
+  {% for relist in widoc.doc_f.all %}
+  <tr>
+    <td width='10%'>{{ relist.doc_revision }}</td>
+    <td>{{ relist.doc_modify }}</td>
+    <td width='10%'>{{ relist.doc_revisor }}</td>
+    <td width='10%'>{{ relist.doc_rev_date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Submit">
+    {% if not form.instance.pk %}
+      <a class="btn btn-default" href="{% url 'project:index' %}">Cancel</a>
+    {% else %}
+      <a class="btn btn-default" href="{% url 'project:detail' pk=project.pk %}">Cancel</a>
+      <a class="btn btn-danger" href="{% url 'project:delete' pk=project.pk %}">Delete</a>
+    {% endif %}
+  </form>
+</div>
+
+{% endblock %}

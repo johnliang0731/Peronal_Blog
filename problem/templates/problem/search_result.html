@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static "problem/css/master.css" %}">
+<div class="container">
+
+  {% if error_msg %}
+    <p>{{ error_msg }}</p>
+  {% endif %}
+
+<h1>Search Result</h1>
+  <table class="table table-hover">
+    <tr>
+      <th width='20%'>Problem Status</th>
+      <th width='55%'>Title</th>
+      <th width='15%'>Submitted Date</th>
+      <th>Submitted By</th>
+    </tr>
+  {% for post in post_search %}
+    <tr>
+      <td id="status_class">{{ post.get_status_display }}</td>
+      <td><a href="{% url "problem:postdetail" pk=post.pk %}">{{ post.title }}</a></td>
+      <td>{{ post.create_date|date:"M d, Y" }}</td>
+      <td>{{ post.user }}</td>
+    </tr>
+  {% empty %}
+    <tr>
+        <td class="text-center" colspan='4'><strong>No Result Found</strong></td>
+    </tr>
+  {% endfor %}
+
+<a class="btn btn-default" href="{% url 'problem:all' %}">Back</a>
+<p></p>
+
+</div>
+{% endblock %}

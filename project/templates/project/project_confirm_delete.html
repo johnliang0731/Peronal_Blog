@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Confirm delete {{project.get_bus_type_display}} - {{project.project_name}}?</h1>
+<p>Battery Type: {{project.get_module_type_display}}</p>
+<p>Bus Quantity: {{project.bus_number}}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <input type="submit" class="btn btn-danger" value="Delete">
+  <a class="btn btn-default" href="{% url 'project:detail' pk=project.pk %}">Cancel</a>
+</form>
+
+{% endblock %}
