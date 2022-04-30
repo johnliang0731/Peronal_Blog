@@ -19,16 +19,16 @@ This project is developed in Python with the framework of Django. SQLite is sele
 3. Open a browser, input the url：http://127.0.0.1:8000/
 
 ## Project Sample Screenshot
-![main_menu_report2](/static/image/main.png)
+![IMG1](/static/image/main.PNG)
 (Fig1: Screenshot of Main Page)
 
-![main_menu](/static/image/bbs1.png)
+![IMG2](/static/image/bbs1.PNG)
 (Fig2: Screenshot 1 of Forum)
 
-![main_menu_manuf](/static/image/bbs2.png)
+![IMG3](/static/image/bbs2.PNG)
 (Fig3: Screenshot 2 of Forum)
 
-![main_menu_city](/static/image/doc1.png)
+![IMG4](/static/image/doc1.PNG)
 (Fig4: Screenshot of Document Page)
 
 ## Developer
